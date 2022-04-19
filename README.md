@@ -19,7 +19,7 @@ optional arguments:
 
 -i, --ignore_isomerism ignore geometric and stereometric isomerism when canonizing
 
--a, --no_alignment do not apply molecule alignment by Kabsch algorithm when calculating RMSD
+-a, --no_alignment do not apply molecule alignment by Kabsch algorithm or QCP algorithm when calculating RMSD
 
 -q, --use QCP algorithm instead of Kabsch algorithm
 
