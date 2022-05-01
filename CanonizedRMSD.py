@@ -105,7 +105,6 @@ def Calculate(source1,source2,saveMediates=False,outputInterrelationship=False,n
         #print(clock()-start_time)
         sys.exit()
     print("Two input molecules are identical!")
-    #end_time_1=clock()
     (ma,ea)=formatting.FormMat(canonizedA)
     try:
         minRmsd,canonizedMinB,contentMinB=main.CanonizedSequenceRetriever(molB,True,no_isomerism,unbrokenB,ma,ea,no_alignment,qcp) 
@@ -114,7 +113,6 @@ def Calculate(source1,source2,saveMediates=False,outputInterrelationship=False,n
         canonizedMinB=formatting.SequenceExchanger(molB,appending[3],contentMinB)
         (mb,eb)=formatting.FormMat(canonizedMinB)
         if formatting.CheckElements(ea,eb):
-            end_time_4=time.perf_counter()
             if (no_alignment):
                 minRmsd=np.linalg.norm(ma-mb)/np.sqrt(ma.shape[0])
             elif (qcp==False):
@@ -123,12 +121,6 @@ def Calculate(source1,source2,saveMediates=False,outputInterrelationship=False,n
                 MA=ma.A
                 MB=mb.A
                 minRmsd=formatting.qcp_rmsd(MA,MB)
-            end_time_5=time.perf_counter()
-            time4=end_time_5-end_time_4
-            file='calculation_time'
-            f=open(file,'a')
-            f.write(str(time4)+'\n')
-            f.close()
     print('RMSD='+str(minRmsd))
     if saveMediates:
         canonizedB=formatting.SequenceExchanger(molB,appending[3],contentMinB)
@@ -140,8 +132,6 @@ def Calculate(source1,source2,saveMediates=False,outputInterrelationship=False,n
         f.write(s)
     if outputInterrelationship:
         OutputInterrelationship(GetInterrelationship(contentA,contentMinB),A,B)
-    #end_time_2=clock()
-    #print('judging time:%f,calculation time:%f'%(end_time_1-start_time,end_time_2-start_time))
 
 def GetConversion(molA,molB):
     contentA,_=main.CanonizedSequenceRetriever(molA,no_isomerism=True)
