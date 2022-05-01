@@ -149,7 +149,6 @@ def Refine(workset):
 
 
 def BranchingTieBreaking(molB,templateWorklist,ma,ea,no_alignment,qcp):
-    global time3
     unbrokenIndexs=[]
     for item in templateWorklist:
         if not item.isComplete:
@@ -188,7 +187,6 @@ def BranchingTieBreaking(molB,templateWorklist,ma,ea,no_alignment,qcp):
         canonizedB=formatting.SequenceExchanger(molB,0,contentB)
         (mb,eb)=formatting.FormMat(canonizedB)
         if formatting.CheckElements(ea,eb):
-            start_time=time.perf_counter()
             if (no_alignment):
                 rmsd=np.linalg.norm(ma-mb)/np.sqrt(ma.shape[0])
             elif (qcp==False):
@@ -197,8 +195,6 @@ def BranchingTieBreaking(molB,templateWorklist,ma,ea,no_alignment,qcp):
                 MA=ma.A
                 MB=mb.A
                 rmsd=formatting.qcp_rmsd(MA,MB)
-            end_time_3=time.perf_counter()
-            time3=time3+end_time_3-start_time
         if minRmsd==-1 or minRmsd>rmsd:
             minRmsd=rmsd
             canonizedMinB=canonizedB
@@ -210,10 +206,6 @@ def BranchingTieBreaking(molB,templateWorklist,ma,ea,no_alignment,qcp):
             complete=False
             break
     if complete:
-        file='calculation_time'
-        f=open(file,'a')
-        f.write(str(time3)+'\n')
-        f.close()
         return minRmsd,canonizedMinB,contentMinB
     else:
         return BranchingTieBreaking(molB,List,ma,ea,no_alignment,qcp)
@@ -416,8 +408,6 @@ def CanonizedSequenceRetriever(mol,serial=False,no_isomerism=False,unbrokenMolec
         molConf=mol.GetConformer()
         unbrokenMolecule=Canonizer(mol,no_isomerism)
     if serial:
-        global time3
-        time3=0
         return BranchingTieBreaking(mol,unbrokenMolecule,ma,ea,no_alignment,qcp)
     else:
         collection=deepcopy(unbrokenMolecule)
