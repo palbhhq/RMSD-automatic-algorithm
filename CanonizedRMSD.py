@@ -124,7 +124,7 @@ def Calculate(source1,source2,saveMediates=False,outputInterrelationship=False,n
     print('RMSD='+str(minRmsd))
     if saveMediates:
         canonizedB=formatting.SequenceExchanger(molB,appending[3],contentMinB)
-        _,transition,rotation,coords=formatting.RMSD(formatting.FormMat(canonizedA)[0] \
+        _,transition,rotation,coords=formatting.kabsch_rmsd(formatting.FormMat(canonizedA)[0] \
         ,formatting.FormMat(canonizedB)[0],True)
         with open("conversion_matrices.log",'w') as f:
             s="Transition Matrix:\n"+str(transition) \
