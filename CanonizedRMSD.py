@@ -129,7 +129,7 @@ def Calculate(source1,source2,saveMediates=False,outputInterrelationship=False,n
         with open("conversion_matrices.log",'w') as f:
             s="Transition Matrix:\n"+str(transition) \
         +"\nRotation Matrix:\n"+str(rotation)+"\nTransformed Coordinates:\n"+str(coords)
-        f.write(s)
+            f.write(s)
     if outputInterrelationship:
         OutputInterrelationship(GetInterrelationship(contentA,contentMinB),A,B)
 
