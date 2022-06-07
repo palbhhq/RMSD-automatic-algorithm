@@ -280,7 +280,7 @@ def kabsch_rmsd(m1,m2,output=False,no_alignment=False):
         e=np.eye(3)
         e[2,2]=d
         u=np.dot(np.dot(wt.T,e),v.T)     # rotation matrix
-        q=np.dot(q,u)      # transformed q coordinates
+        q=np.dot(q,u)+m1Center      # transformed q coordinates
         rmsd=np.linalg.norm(p-q)/np.sqrt(m1.shape[0])
         if output:
             return rmsd,(m2Center-m1Center),u,q
